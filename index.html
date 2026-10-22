@@ -1,274 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101827">
-  <title>Meine KI-Zentrale</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      padding: 20px;
-      background: #101827;
-      color: white;
-      font-family: -apple-system, Arial, sans-serif;
-    }
-
-    .container {
-      max-width: 650px;
-      margin: auto;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 8px;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #aab6c8;
-      margin-bottom: 25px;
-    }
-
-    .card {
-      background: #1e293b;
-      border-radius: 16px;
-      padding: 18px;
-      margin-bottom: 15px;
-    }
-
-    .master {
-      border: 2px solid #22c55e;
-    }
-
-    .name {
-      font-size: 19px;
-      font-weight: bold;
-    }
-
-    .role {
-      color: #aab6c8;
-      font-size: 14px;
-      margin-top: 5px;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 110px;
-      padding: 15px;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      resize: vertical;
-    }
-
-    button {
-      width: 100%;
-      padding: 16px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 12px;
-      background: #22c55e;
-      color: #101827;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button.secondary {
-      background: #334155;
-      color: white;
-    }
-
-    #answer {
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-
-    .status {
-      color: #fbbf24;
-      font-size: 13px;
-    }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#131b2a"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="KI-Zentrale">
+<title>KI-Zentrale – Vier-KI-Vergleich</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#0c1220;color:#f4f7ff}*{box-sizing:border-box}body{margin:0;padding:24px;max-width:1000px;margin-inline:auto}header{display:flex;align-items:center;justify-content:space-between;gap:16px}h1{font-size:clamp(1.5rem,4vw,2.25rem);margin:0 0 4px}h2{font-size:1.1rem;margin:0 0 10px}p{color:#bac5d6;line-height:1.5}.tag{border:1px solid #566177;border-radius:20px;padding:7px 10px;font-size:.8rem;color:#c4d6ed}.box{background:#172234;border:1px solid #314157;border-radius:16px;padding:18px;margin:18px 0}textarea{display:block;width:100%;border:1px solid #53657e;border-radius:10px;background:#0c1423;color:#fff;resize:vertical;padding:12px;font:inherit;line-height:1.4;min-height:100px}.question{min-height:120px}button,.link{font:inherit;border:0;border-radius:10px;padding:11px 14px;background:#347ad8;color:#fff;cursor:pointer;text-decoration:none;display:inline-block;font-weight:600}button:hover,.link:hover{filter:brightness(1.15)}button.secondary{background:#344760}button:disabled{opacity:.45;cursor:not-allowed}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.grid .box{margin:0}.help{font-size:.9rem}.status{min-height:1.2em;color:#a5d8ff;margin-top:8px}.foot{font-size:.85rem;color:#94a6c0}.warn{border-left:3px solid #eabf66;padding-left:12px}@media(max-width:650px){body{padding:16px}.grid{grid-template-columns:1fr}}
+</style>
 </head>
-
 <body>
-<div class="container">
-
-  <h1>Meine KI-Zentrale</h1>
-
-  <p class="subtitle">
-    Vier KIs – eine gemeinsame Antwort
-  </p>
-
-  <div class="card master">
-    <div class="name">ChatGPT – MASTER</div>
-    <div class="role">
-      Koordination und Zusammenfassung
-    </div>
-    <p class="status">Noch nicht verbunden</p>
-  </div>
-
-  <div class="card">
-    <div class="name">Claude</div>
-    <div class="role">
-      Logik und kritische Prüfung
-    </div>
-    <p class="status">Noch nicht verbunden</p>
-  </div>
-
-  <div class="card">
-    <div class="name">Gemini</div>
-    <div class="role">
-      Recherche und zusätzliche Perspektiven
-    </div>
-    <p class="status">Noch nicht verbunden</p>
-  </div>
-
-  <div class="card">
-    <div class="name">Grok</div>
-    <div class="role">
-      Alternative Einschätzungen
-    </div>
-    <p class="status">Noch nicht verbunden</p>
-  </div>
-
-  <div class="card">
-    <h3>Deine Frage</h3>
-
-    <textarea
-      id="question"
-      placeholder="Stelle deine Frage..."
-    ></textarea>
-
-    <button onclick="startListening()">
-      🎤 Spracheingabe
-    </button>
-
-    <button onclick="askAI()">
-      Frage stellen
-    </button>
-  </div>
-
-  <div class="card">
-    <h3>Gemeinsame Antwort</h3>
-
-    <div id="answer">
-      Hier erscheint später die Antwort
-      deiner KI-Zentrale.
-    </div>
-
-    <button
-      class="secondary"
-      onclick="speakAnswer()">
-      🔊 Antwort vorlesen
-    </button>
-
-    <button
-      class="secondary"
-      onclick="stopSpeaking()">
-      Vorlesen stoppen
-    </button>
-  </div>
-
-</div>
-
+<header><div><h1>KI-Zentrale</h1><p>Vier KIs vergleichen · kostenloser manueller Test</p></div><span class="tag">Lokale Entwürfe</span></header>
+<section class="box"><h2>1 · Frage sprechen oder schreiben</h2><textarea id="question" class="question" placeholder="Welche Frage sollen alle vier KIs beantworten?"></textarea><div class="actions"><button id="mic">🎤 Spracheingabe starten</button><button id="copyQ" class="secondary">Frage kopieren</button><button id="clear" class="secondary">Neue Frage</button></div><div id="speechStatus" class="status" aria-live="polite"></div><p class="help">Spracheingabe hängt vom Browser ab; auf manchen Geräten nicht verfügbar. Du kannst die Frage jederzeit eintippen.</p></section>
+<section class="grid" id="panels"></section>
+<section class="box"><h2>3 · ChatGPT lässt die Antworten vergleichen</h2><p>Füge die Antworten oben ein. Mit einem Klick kopierst du einen Vergleichsauftrag. Öffne ChatGPT, füge den Text ein und lasse Unterschiede, Faktenlage und Unsicherheiten prüfen.</p><div class="actions"><button id="compare">Vergleichsauftrag kopieren</button><a class="link" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT öffnen</a></div><div id="compareStatus" class="status" aria-live="polite"></div></section>
+<section class="box"><h2>4 · Fazit vorlesen lassen</h2><textarea id="summary" placeholder="Füge hier das Fazit aus ChatGPT ein."></textarea><div class="actions"><button id="read">🔊 Fazit vorlesen</button><button id="stop" class="secondary">Stopp</button></div><p class="help">Verwendet die Sprachsynthese deines Geräts.</p></section>
+<p class="foot warn">Wichtig: Diese Version führt keine automatischen Anfragen aus und hat keinen echten Login. Die Anmeldung bei den KI-Webseiten erfolgt separat. Keine Passwörter oder API-Schlüssel in diese öffentliche GitHub-Datei schreiben. Inhalte werden nur in diesem Browser lokal gespeichert; bei sensiblen Angaben Vorsicht.</p>
 <script>
-  let currentAnswer = "";
-
-  function startListening() {
-    const SpeechRecognition =
-      window.SpeechRecognition ||
-      window.webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
-      alert(
-        "Die Spracheingabe wird von diesem " +
-        "Browser nicht unterstützt. " +
-        "Du kannst die iPhone-Diktierfunktion " +
-        "über die Tastatur verwenden."
-      );
-      return;
-    }
-
-    const recognition = new SpeechRecognition();
-
-    recognition.lang = "de-DE";
-    recognition.continuous = false;
-    recognition.interimResults = false;
-
-    recognition.onresult = function(event) {
-      document.getElementById("question").value =
-        event.results[0][0].transcript;
-    };
-
-    recognition.onerror = function(event) {
-      alert("Spracherkennung: " + event.error);
-    };
-
-    recognition.start();
-  }
-
-  function askAI() {
-    const question =
-      document.getElementById("question")
-      .value.trim();
-
-    if (!question) {
-      alert("Bitte stelle zuerst eine Frage.");
-      return;
-    }
-
-    currentAnswer =
-      "Dies ist eine Demonstration unserer " +
-      "KI-Zentrale.\n\n" +
-      "Deine Frage lautet:\n" +
-      question + "\n\n" +
-      "ChatGPT, Claude, Gemini und Grok " +
-      "sind noch nicht verbunden.\n\n" +
-      "Sobald wir die Schnittstellen " +
-      "eingerichtet haben, können die " +
-      "Modelle deine Frage bearbeiten " +
-      "und eine gemeinsame Antwort liefern.";
-
-    document.getElementById("answer")
-      .textContent = currentAnswer;
-  }
-
-  function speakAnswer() {
-    if (!currentAnswer) {
-      alert("Es gibt noch keine Antwort.");
-      return;
-    }
-
-    if (!("speechSynthesis" in window)) {
-      alert("Sprachausgabe nicht verfügbar.");
-      return;
-    }
-
-    speechSynthesis.cancel();
-
-    const speech =
-      new SpeechSynthesisUtterance(currentAnswer);
-
-    speech.lang = "de-DE";
-    speech.rate = 1;
-
-    speechSynthesis.speak(speech);
-  }
-
-  function stopSpeaking() {
-    if ("speechSynthesis" in window) {
-      speechSynthesis.cancel();
-    }
-  }
+'use strict';
+const services=[['ChatGPT','https://chatgpt.com/'],['Claude','https://claude.ai/'],['Gemini','https://gemini.google.com/'],['Grok','https://grok.com/']];
+const $=id=>document.getElementById(id);const storeKey='kizentrale-v1';let state={};try{state=JSON.parse(localStorage.getItem(storeKey))||{}}catch{}
+function save(){const payload={question:$('question').value,summary:$('summary').value};services.forEach(([n])=>payload[n]=$('answer-'+n).value);try{localStorage.setItem(storeKey,JSON.stringify(payload))}catch{}}
+$('panels').innerHTML=services.map(([n,url])=>`<section class="box"><h2>2 · ${n}</h2><div class="actions"><a class="link" href="${url}" target="_blank" rel="noopener noreferrer">${n} öffnen ↗</a><button class="secondary" data-copy="${n}">Frage kopieren</button></div><p class="help">Frage dort einfügen und Antwort hierher kopieren:</p><textarea id="answer-${n}" aria-label="Antwort von ${n}" placeholder="Antwort von ${n} einfügen"></textarea></section>`).join('');
+$('question').value=state.question||'';$('summary').value=state.summary||'';services.forEach(([n])=>{$('answer-'+n).value=state[n]||'';$('answer-'+n).addEventListener('input',save)});$('question').addEventListener('input',save);$('summary').addEventListener('input',save);
+async function copy(text,location){try{await navigator.clipboard.writeText(text);$(location).textContent='In Zwischenablage kopiert.'}catch{$(location).textContent='Kopieren nicht erlaubt. Bitte Text markieren und manuell kopieren.'}}
+$('copyQ').onclick=()=>copy($('question').value,'speechStatus');document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>copy($('question').value,'speechStatus'));
+$('clear').onclick=()=>{if(!confirm('Aktuelle Frage, Antworten und Fazit löschen?'))return;$('question').value='';$('summary').value='';services.forEach(([n])=>$('answer-'+n).value='');save()};
+$('compare').onclick=()=>{const q=$('question').value.trim();if(!q){$('compareStatus').textContent='Bitte zuerst eine Frage eingeben.';return}const blocks=services.map(([n])=>`${n}:\n${$('answer-'+n).value.trim()||'[Keine Antwort eingefügt]'}`).join('\n\n');const prompt=`Vergleiche die folgenden vier KI-Antworten zur selben Frage. Prüfe Konsistenz, logische Fehler, Widersprüche, unbelegte Behauptungen und nötige Quellenprüfung. Behaupte nicht, dass Fakten verifiziert sind, wenn du keine unabhängigen Quellen geprüft hast. Gib ein präzises Fazit und benenne verbleibende Unsicherheiten.\n\nFRAGE:\n${q}\n\nANTWORTEN:\n${blocks}`;copy(prompt,'compareStatus')};
+const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;let recognition;if(!Recognition){$('mic').disabled=true;$('speechStatus').textContent='Spracherkennung wird in diesem Browser nicht unterstützt. Nutze die Tastatur oder die Diktierfunktion des Geräts.'}else{$('mic').onclick=()=>{if(recognition){recognition.stop();return}recognition=new Recognition();recognition.lang='de-DE';recognition.interimResults=false;recognition.continuous=false;recognition.onresult=e=>{const spoken=Array.from(e.results).map(r=>r[0].transcript).join(' ');$('question').value=($('question').value.trim()+' '+spoken).trim();save();$('speechStatus').textContent='Sprache übernommen.'};recognition.onerror=e=>{$('speechStatus').textContent='Spracheingabe fehlgeschlagen: '+e.error};recognition.onend=()=>{recognition=null;$('mic').textContent='🎤 Spracheingabe starten'};try{recognition.start();$('mic').textContent='⏹ Aufnahme stoppen';$('speechStatus').textContent='Ich höre zu …'}catch{$('speechStatus').textContent='Mikrofon konnte nicht gestartet werden.'}}}
+$('read').onclick=()=>{const s=$('summary').value.trim();if(!s)return;if(!('speechSynthesis' in window)){alert('Sprachausgabe hier nicht unterstützt.');return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(s);u.lang='de-DE';u.rate=1;speechSynthesis.speak(u)};$('stop').onclick=()=>{if('speechSynthesis'in window)speechSynthesis.cancel()};
 </script>
-
-</body>
-</html>
+</body></html>
