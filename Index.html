@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <title>Meine KI-Zentrale</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #101827;
+      color: white;
+      font-family: -apple-system, Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 650px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #aab6c8;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: #1e293b;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 15px;
+    }
+
+    .master {
+      border: 2px solid #22c55e;
+    }
+
+    .name {
+      font-size: 19px;
+      font-weight: bold;
+    }
+
+    .role {
+      color: #aab6c8;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 110px;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 12px;
+      background: #22c55e;
+      color: #101827;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: #334155;
+      color: white;
+    }
+
+    #answer {
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .status {
+      color: #fbbf24;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+  <h1>Meine KI-Zentrale</h1>
+
+  <p class="subtitle">
+    Vier KIs – eine gemeinsame Antwort
+  </p>
+
+  <div class="card master">
+    <div class="name">ChatGPT – MASTER</div>
+    <div class="role">
+      Koordination und Zusammenfassung
+    </div>
+    <p class="status">Noch nicht verbunden</p>
+  </div>
+
+  <div class="card">
+    <div class="name">Claude</div>
+    <div class="role">
+      Logik und kritische Prüfung
+    </div>
+    <p class="status">Noch nicht verbunden</p>
+  </div>
+
+  <div class="card">
+    <div class="name">Gemini</div>
+    <div class="role">
+      Recherche und zusätzliche Perspektiven
+    </div>
+    <p class="status">Noch nicht verbunden</p>
+  </div>
+
+  <div class="card">
+    <div class="name">Grok</div>
+    <div class="role">
+      Alternative Einschätzungen
+    </div>
+    <p class="status">Noch nicht verbunden</p>
+  </div>
+
+  <div class="card">
+    <h3>Deine Frage</h3>
+
+    <textarea
+      id="question"
+      placeholder="Stelle deine Frage..."
+    ></textarea>
+
+    <button onclick="startListening()">
+      🎤 Spracheingabe
+    </button>
+
+    <button onclick="askAI()">
+      Frage stellen
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>Gemeinsame Antwort</h3>
+
+    <div id="answer">
+      Hier erscheint später die Antwort
+      deiner KI-Zentrale.
+    </div>
+
+    <button
+      class="secondary"
+      onclick="speakAnswer()">
+      🔊 Antwort vorlesen
+    </button>
+
+    <button
+      class="secondary"
+      onclick="stopSpeaking()">
+      Vorlesen stoppen
+    </button>
+  </div>
+
+</div>
+
+<script>
+  let currentAnswer = "";
+
+  function startListening() {
+    const SpeechRecognition =
+      window.SpeechRecognition ||
+      window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      alert(
+        "Die Spracheingabe wird von diesem " +
+        "Browser nicht unterstützt. " +
+        "Du kannst die iPhone-Diktierfunktion " +
+        "über die Tastatur verwenden."
+      );
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+
+    recognition.lang = "de-DE";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onresult = function(event) {
+      document.getElementById("question").value =
+        event.results[0][0].transcript;
+    };
+
+    recognition.onerror = function(event) {
+      alert("Spracherkennung: " + event.error);
+    };
+
+    recognition.start();
+  }
+
+  function askAI() {
+    const question =
+      document.getElementById("question")
+      .value.trim();
+
+    if (!question) {
+      alert("Bitte stelle zuerst eine Frage.");
+      return;
+    }
+
+    currentAnswer =
+      "Dies ist eine Demonstration unserer " +
+      "KI-Zentrale.\n\n" +
+      "Deine Frage lautet:\n" +
+      question + "\n\n" +
+      "ChatGPT, Claude, Gemini und Grok " +
+      "sind noch nicht verbunden.\n\n" +
+      "Sobald wir die Schnittstellen " +
+      "eingerichtet haben, können die " +
+      "Modelle deine Frage bearbeiten " +
+      "und eine gemeinsame Antwort liefern.";
+
+    document.getElementById("answer")
+      .textContent = currentAnswer;
+  }
+
+  function speakAnswer() {
+    if (!currentAnswer) {
+      alert("Es gibt noch keine Antwort.");
+      return;
+    }
+
+    if (!("speechSynthesis" in window)) {
+      alert("Sprachausgabe nicht verfügbar.");
+      return;
+    }
+
+    speechSynthesis.cancel();
+
+    const speech =
+      new SpeechSynthesisUtterance(currentAnswer);
+
+    speech.lang = "de-DE";
+    speech.rate = 1;
+
+    speechSynthesis.speak(speech);
+  }
+
+  function stopSpeaking() {
+    if ("speechSynthesis" in window) {
+      speechSynthesis.cancel();
+    }
+  }
+</script>
+
+</body>
+</html>
